@@ -11,8 +11,8 @@
     - name: Log into private registry
       docker_login:
         registry: registry.asani.pro
-        username: {{ registry.name }}
-        password: {{ registry.pass }}
+        username: {{ registry_name }}
+        password: {{ registry_pass }}
         reauthorize: yes
 
     - name: Tag and push private registry
