@@ -17,12 +17,14 @@ pipeline{
     }
     stage("Docker Stage"){
       steps{
-        sh """
-          ansible-playbook -i ansible/inventory.ini -l workers \
-          -e registry_name=${REGISTRY_NAME} \
-          -e registry_pass=${REGISTRY_PASS} \
-          ansible/docker.yml
-        """
+        withCredentials([usernamePassword(credentialsId: 'nexus-id', passwordVariable: 'REGISTRY_PASS', usernameVariable: 'REGISTRY_NAME')]) {
+           sh """
+            ansible-playbook -i ansible/inventory.ini -l workers \
+            -e registry_name=${REGISTRY_NAME} \
+            -e registry_pass=${REGISTRY_PASS} \
+            ansible/docker.yml
+          """
+        }
       }
     }
 
