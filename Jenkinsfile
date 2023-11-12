@@ -28,10 +28,12 @@ pipeline{
       }
     }
 
-    // stage("Deploy Apps"){
-    //   steps{
-    
-    //   }
-    // }
+    stage("Deploy Apps"){
+      steps{
+        sh """
+          ansible-playbook -i ansible/inventory.ini -l workers ansible/deploy.yml
+        """
+      }
+    }
   }
 }
