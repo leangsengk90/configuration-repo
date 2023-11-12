@@ -1,0 +1,23 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Build Container Image
+      docker_image:
+        name: registry.asani.pro/spring-api:1.1.100
+        build:
+          path: /opt/spring-testing-good
+        source: build
+        
+    - name: Log into private registry
+      docker_login:
+        registry: registry.asani.pro
+        username: {{ registry.name }}
+        password: {{ registry.pass }}
+        reauthorize: yes
+
+    - name: Tag and push private registry
+      docker_image:
+        name: registry.asani.pro/spring-api:1.1.100
+        repository: registry.asani.pro/spring-api:1.1.100
+        push: yes
+        source: local
