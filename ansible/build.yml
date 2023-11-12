@@ -4,4 +4,5 @@
     - name: Build Project
       shell: |
         mvn clean package
-      chdir: /opt/spring-testing-good
+      args:
+        chdir: /opt/spring-testing-good
